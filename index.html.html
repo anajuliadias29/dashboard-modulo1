@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive CX & Operations Dashboard | FAGEN Tech Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dashBg: '#0F0C1B',
+                        cardBg: '#18132A',
+                        cardBorder: '#2D234A',
+                        dangerRed: '#FF1744',
+                        warningOrange: '#FFC400',
+                        infoBlue: '#0066FF',
+                        accentCyan: '#00E5FF',
+                        emeraldGreen: '#00E676'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F0C1B;
+            color: #F1F5F9;
+        }
+        .kpi-card {
+            background-color: #18132A;
+            border: 1px solid #2D234A;
+            border-radius: 12px;
+            position: relative;
+        }
+        .panel-card {
+            background-color: #18132A;
+            border: 1px solid #2D234A;
+            border-radius: 12px;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0C1B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2D234A;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-4 md:p-6 gap-5">
+
+    <!-- TOP HEADER -->
+    <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-800">
+        <div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight uppercase">EXECUTIVE CX & OPERATIONS DASHBOARD</h1>
+            <p class="text-sm text-slate-300 font-medium mt-1">Monitoramento Integrado de Experiência do Cliente • FAGEN Tech Services</p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+            <button onclick="toggleModal('auditModal')" class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 transition">
+                <i data-lucide="calculator" class="w-4 h-4"></i>
+                <span>Relatório de Auditoria</span>
+            </button>
+            <div class="px-3.5 py-1.5 rounded border border-red-500 bg-red-950/80 text-red-400 text-sm font-black uppercase tracking-wide shadow-[0_0_12px_rgba(255,23,68,0.35)]">
+                Status: ATENÇÃO CRÍTICA
+            </div>
+            <div class="px-3.5 py-1.5 rounded border border-slate-700 bg-slate-800/80 text-slate-300 text-sm font-semibold">
+                Base: 100 Clientes
+            </div>
+        </div>
+    </header>
+
+    <!-- TOP 4 KPI CARDS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <!-- CARD 1: NPS -->
+        <div class="kpi-card p-5 border-t-4 border-t-dangerRed flex flex-col justify-between shadow-[0_4px_20px_rgba(255,23,68,0.15)]">
+            <div>
+                <div class="text-xs font-extrabold text-slate-400 tracking-wider uppercase mb-1">NET PROMOTER SCORE (NPS)</div>
+                <div class="text-5xl font-black text-white my-1">-21</div>
+                <div class="text-sm font-black text-[#FF3355] mt-1">
+                    Zona Crítica <span class="text-slate-400 font-normal">(Meta: &gt; +50)</span>
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs sm:text-sm text-slate-300 font-medium">
+                44% Detratores | 23% Promotores
+            </div>
+        </div>
+
+        <!-- CARD 2: CSAT -->
+        <div class="kpi-card p-5 border-t-4 border-t-warningOrange flex flex-col justify-between shadow-[0_4px_20px_rgba(255,196,0,0.12)]">
+            <div>
+                <div class="text-xs font-extrabold text-slate-400 tracking-wider uppercase mb-1">CSAT GERAL MÉDIO</div>
+                <div class="text-5xl font-black text-white my-1">3.19 / 5.0</div>
+                <div class="text-sm font-black text-[#FFD000] mt-1">
+                    Abaixo da Meta <span class="text-slate-400 font-normal">(Meta: 4.2)</span>
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs sm:text-sm text-slate-300 font-medium">
+                37% dos chamados insatisfeitos
+            </div>
+        </div>
+
+        <!-- CARD 3: TEMPO MÉDIO RESOLUÇÃO -->
+        <div class="kpi-card p-5 border-t-4 border-t-infoBlue flex flex-col justify-between shadow-[0_4px_20px_rgba(0,102,255,0.15)]">
+            <div>
+                <div class="text-xs font-extrabold text-slate-400 tracking-wider uppercase mb-1">TEMPO MÉDIO DE RESOLUÇÃO</div>
+                <div class="text-5xl font-black text-white my-1">29.2h</div>
+                <div class="text-sm font-black text-[#29B6FF] mt-1">
+                    Mediana: 26.8h <span class="text-slate-400 font-normal">(Max: 71.7h)</span>
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs sm:text-sm text-slate-300 font-medium">
+                Desvio-Padrão elevado: 19.1h
+            </div>
+        </div>
+
+        <!-- CARD 4: RISCO CHURN -->
+        <div class="kpi-card p-5 border-t-4 border-t-dangerRed flex flex-col justify-between shadow-[0_4px_20px_rgba(255,23,68,0.15)]">
+            <div>
+                <div class="text-xs font-extrabold text-slate-400 tracking-wider uppercase mb-1">CLIENTES EM ALTO RISCO (CHURN)</div>
+                <div class="text-5xl font-black text-white my-1">44%</div>
+                <div class="text-sm font-black text-[#FF3355] mt-1">
+                    Risco Iminente de Cancelamento
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs sm:text-sm text-slate-300 font-medium">
+                Impacto direto na receita B2B
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MAIN PANELS GRID -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
+
+        <!-- PANEL 1: PERFORMANCE POR CANAL DE ATENDIMENTO -->
+        <div class="panel-card p-6 flex flex-col justify-between space-y-6">
+            <div>
+                <div class="mb-5">
+                    <h2 class="text-lg font-extrabold text-white uppercase tracking-tight">PERFORMANCE POR CANAL DE ATENDIMENTO</h2>
+                    <p class="text-sm text-slate-400 mt-0.5">Comparativo: Tempo de Resolução (h), Esforço (CES) e % Risco Alto</p>
+                </div>
+
+                <!-- Channels Table / Bars -->
+                <div class="space-y-4">
+                    
+                    <!-- Chat Humano -->
+                    <div class="flex items-center justify-between text-sm gap-3">
+                        <span class="w-32 font-bold text-slate-200">Chat Humano</span>
+                        <div class="flex-1 bg-slate-800/80 rounded-full h-5 relative overflow-hidden">
+                            <div class="bg-[#0066FF] h-full rounded-full shadow-[0_0_8px_rgba(0,102,255,0.6)]" style="width: 58%;"></div>
+                            <span class="absolute inset-0 flex items-center justify-center text-xs font-black text-white drop-shadow">29.2h</span>
+                        </div>
+                        <span class="w-24 text-[#00E5FF] font-bold text-right">CES: 4.13</span>
+                        <span class="w-28 text-slate-300 font-semibold text-right">Churn: 38%</span>
+                    </div>
+
+                    <!-- Telefone -->
+                    <div class="flex items-center justify-between text-sm gap-3">
+                        <span class="w-32 font-bold text-slate-200">Telefone</span>
+                        <div class="flex-1 bg-slate-800/80 rounded-full h-5 relative overflow-hidden">
+                            <div class="bg-[#0066FF] h-full rounded-full shadow-[0_0_8px_rgba(0,102,255,0.6)]" style="width: 54%;"></div>
+                            <span class="absolute inset-0 flex items-center justify-center text-xs font-black text-white drop-shadow">27.1h</span>
+                        </div>
+                        <span class="w-24 text-[#00E5FF] font-bold text-right">CES: 4.15</span>
+                        <span class="w-28 text-slate-300 font-semibold text-right">Churn: 35%</span>
+                    </div>
+
+                    <!-- E-mail -->
+                    <div class="flex items-center justify-between text-sm gap-3">
+                        <span class="w-32 font-bold text-slate-200">E-mail</span>
+                        <div class="flex-1 bg-slate-800/80 rounded-full h-5 relative overflow-hidden">
+                            <div class="bg-[#0066FF] h-full rounded-full shadow-[0_0_8px_rgba(0,102,255,0.6)]" style="width: 51%;"></div>
+                            <span class="absolute inset-0 flex items-center justify-center text-xs font-black text-white drop-shadow">25.9h</span>
+                        </div>
+                        <span class="w-24 text-[#00E5FF] font-bold text-right">CES: 4.33</span>
+                        <span class="w-28 text-slate-300 font-semibold text-right">Churn: 40%</span>
+                    </div>
+
+                    <!-- Chatbot -->
+                    <div class="flex items-center justify-between text-sm gap-3">
+                        <span class="w-32 font-bold text-slate-200">Chatbot</span>
+                        <div class="flex-1 bg-slate-800/80 rounded-full h-5 relative overflow-hidden">
+                            <div class="bg-[#FF1744] h-full rounded-full shadow-[0_0_8px_rgba(255,23,68,0.7)]" style="width: 70%;"></div>
+                            <span class="absolute inset-0 flex items-center justify-center text-xs font-black text-white drop-shadow">35.0h</span>
+                        </div>
+                        <span class="w-24 text-[#FFC400] font-black text-right">CES: 3.33</span>
+                        <span class="w-28 text-[#FF2A4B] font-black text-right">Churn: 56%</span>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="flex items-center justify-between text-sm gap-3">
+                        <span class="w-32 font-bold text-slate-200">WhatsApp</span>
+                        <div class="flex-1 bg-slate-800/80 rounded-full h-5 relative overflow-hidden">
+                            <div class="bg-[#0066FF] h-full rounded-full shadow-[0_0_8px_rgba(0,102,255,0.6)]" style="width: 54%;"></div>
+                            <span class="absolute inset-0 flex items-center justify-center text-xs font-black text-white drop-shadow">27.1h</span>
+                        </div>
+                        <span class="w-24 text-[#FF2A4B] font-black text-right">CES: 2.38</span>
+                        <span class="w-28 text-[#FF2A4B] font-black text-right">Churn: 75%</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Panel 1 Footer Footnotes -->
+            <div class="pt-4 border-t border-slate-800/80 text-xs sm:text-sm text-slate-300 space-y-1.5 font-medium">
+                <p>• Chatbot registra o maior tempo de espera (35h) e 55.6% de risco alto.</p>
+                <p>• WhatsApp registra pior atrito/esforço do cliente (CES 2.38) com 75% em risco alto.</p>
+            </div>
+        </div>
+
+        <!-- PANEL 2: VULNERABILIDADE FINANCEIRA POR SEGMENTO -->
+        <div class="panel-card p-6 flex flex-col justify-between space-y-4">
+            <div>
+                <div class="mb-4">
+                    <h2 class="text-lg font-extrabold text-white uppercase tracking-tight">VULNERABILIDADE FINANCEIRA POR SEGMENTO</h2>
+                    <p class="text-sm text-slate-400 mt-0.5">Ponderação de Ticket Médio Mensal e Exposição de Receita</p>
+                </div>
+
+                <!-- Segments Cards -->
+                <div class="space-y-3.5">
+                    
+                    <!-- B2B Corporativo -->
+                    <div class="p-4 rounded-lg border border-slate-800 bg-slate-900/60 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-white">B2B Corporativo</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded border border-blue-500/40 bg-blue-950/80 text-blue-300">Ticket Alto</span>
+                        </div>
+                        <div class="text-base font-black text-[#3892FF]">
+                            Faturamento Médio: R$ 3.404,87 / mês
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            Perder 1 conta B2B Corporativo equivale a perder 33 clientes B2C.
+                        </p>
+                    </div>
+
+                    <!-- B2B PME -->
+                    <div class="p-4 rounded-lg border border-red-500/60 bg-red-950/30 space-y-1 shadow-[0_0_12px_rgba(255,23,68,0.12)]">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-white">B2B PME</span>
+                            <span class="text-xs font-black px-2.5 py-0.5 rounded border border-red-500 bg-red-950 text-red-300">Gargalo Crítico</span>
+                        </div>
+                        <div class="text-base font-black text-[#FF3355]">
+                            Faturamento Médio: R$ 916,66 / mês
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-200">
+                            Pior tempo de resposta da base (34.7h) colocando em risco pequenos negócios.
+                        </p>
+                    </div>
+
+                    <!-- B2C Premium -->
+                    <div class="p-4 rounded-lg border border-emerald-900/40 bg-emerald-950/20 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-white">B2C Premium</span>
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded border border-emerald-500/40 bg-emerald-950 text-emerald-400">Fidelizado</span>
+                        </div>
+                        <div class="text-base font-bold text-emerald-400">
+                            Faturamento Médio: R$ 279,23 / mês
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            Excelente retorno com atendimento humano via chat (CSAT 5 e NPS 9).
+                        </p>
+                    </div>
+
+                    <!-- B2C Standard -->
+                    <div class="p-4 rounded-lg border border-slate-800 bg-slate-900/60 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-white">B2C Standard</span>
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Volume Básico</span>
+                        </div>
+                        <div class="text-base font-bold text-slate-200">
+                            Faturamento Médio: R$ 102,34 / mês
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            Grande volume, ticket baixo e alta sensibilidade a cobranças indevidas.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MODAL DE DEFESA & AUDITORIA ESTATÍSTICA -->
+    <div id="auditModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-cyan-400"></i>
+                    <h3 class="text-lg font-bold text-white">Relatório de Auditoria Estatística — FAGEN / UFU</h3>
+                </div>
+                <button onclick="toggleModal('auditModal')" class="p-1 rounded text-slate-400 hover:text-white transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3.5 text-sm text-slate-300">
+                <div class="p-3.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1">
+                    <span class="font-bold text-emerald-400">1. NPS Metodológico vs Média Simples</span>
+                    <p>Fórmula aplicada: <code class="text-cyan-300">% Promotores (23%) - % Detratores (44%) = -21</code>. A alucinação da IA que tentava calcular Média = 6,27 foi barrada.</p>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1">
+                    <span class="font-bold text-emerald-400">2. Mediana do Tempo e Spend</span>
+                    <p>O tempo médio é de 29.2h, mas a <strong>Mediana é de 26.8h</strong> com desvio-padrão elevado de 19.1h (presença de chamados graves de longa duração).</p>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-slate-800/80 border border-slate-700 space-y-1">
+                    <span class="font-bold text-emerald-400">3. Escala do CES (Esforço)</span>
+                    <p>No canal WhatsApp, o CES de <strong>2.38 / 7.0</strong> indica <em>altíssima fricção</em> exigida do cliente, resultando em 75% de taxa de Churn alto.</p>
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-800 flex justify-end">
+                <button onclick="toggleModal('auditModal')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg text-sm transition">
+                    Fechar Relatório
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            lucide.createIcons();
+        };
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.toggle('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
